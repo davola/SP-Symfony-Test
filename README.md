@@ -33,5 +33,10 @@ An asynchronous request to the actual delete product endpoint will be made.
 ```
 DELETE http://127.0.0.1:8000/products/{id}
 ```
-Deleted products will be removed from screen once they are successfully removed from database.
-Use Chrome console for logs.
+
+Delete Notes:
+- Deleted products will be removed from screen once they are successfully removed from database.
+- Deleted products are being <b>Soft Deleted</b>.
+- Product opacity is set to "50%" when clicked.
+- Product visibility is set to "hidden" when removed successfully.
+- You can use Chrome console for logs.
