@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <ul class="row mt-4">
+        {% for product in products %}
+            <li class="col-sm-4 list-unstyled">
+                <div style="position: relative; border: 1px solid black; border-radius: 1em; padding: 10px; text-align: center;">
+                  <img style="max-width: 90%;" src="{{ product.image }}" alt="{{ product.name }}">
+                  <label for="{{ product.name }}"><strong>{{ product.name }}</strong> ${{ product.price }}.-</label>
+                  <button id="{{ product.id }}" onclick="deleteThis(this);" class="delete btn btn-danger">Delete</button>
+                </div>
+              <br>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+    
+    async function doDelete(btn) {
+      let id = btn.getAttribute('id');
+      console.log(`click id:${id}!`);
+      let parent = document.getElementById(id).parentElement;
+      parent.style.opacity = "0.5";
+      let response = await fetch('http://127.0.0.1:8000/products/' + id, { method: 'DELETE' });
+      if (!response.ok) {
+        alert(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    }
+
+    let deleteThis = async function (btn) {
+      let idDeleted = await doDelete(btn);
+      let id = idDeleted.id;
+      let parent = document.getElementById(id).parentElement;
+      parent.style.visibility = 'hidden';
+      console.log(`Successfully deleted product id ${id}`);
+    };
+  </script>
+{% endblock %}
