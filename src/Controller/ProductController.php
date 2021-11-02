@@ -31,7 +31,7 @@ class ProductController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $product = $entityManager->getRepository(Product::class)->find($id);
-        $entityManager->detach($product);
+        $entityManager->remove($product);
         $entityManager->flush();
 
         return new JsonResponse(['success' => true, 'id' => $id]);
